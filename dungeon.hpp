@@ -1,59 +1,36 @@
 #include <iostream>
-#include <queue>
 #include <vector>
 
 struct RoomNode {
-    std::vector<std::string> enemies;
-    std::vector<std::string> items;
-    bool hasChest;
-    bool hasLockedDoor;
+    public:
+        //room id
+        int roomID;
 
-    //room structure
-    RoomNode* left;
-    RoomNode* right;
+        //pointers
+        RoomNode* left;
+        RoomNode* right;
 
-    //constructor
-    RoomNode() : hasChest(false), hasLockedDoor(false), left(nullptr), right(nullptr) {}
+        //constructor
+        RoomNode() : roomID(0), left(nullptr), right(nullptr) {}
+};
 
-class MapTree {
+class WorldMap {
     private:
         RoomNode* root;
+        int counter;
 
     public:
         //constructor
-        MapTree() : root(nullptr) {}
-
-        //insert node into binary tree
-        void insertNode(RoomNode) {
-            RoomNode* newNode = new RoomNode();
-
-            if (root == nullptr) {
-                root = newNode;
-                return;
-            }
-
-            std::queue<RoomNode*> q;
-            q.push(root);
-
-            while(!q.empty()) {
-                RoomNode* current = q.front();
-                q.pop();
-
-                if (current->left == nullptr) {
-                    current->left = newNode;
-                    return;
-                } else {
-                    q.push(current->left);
-                }
-
-                if (current->right == nullptr) {
-                    current->right = newNode;
-                    return;
-                } else {
-                    q.push(current->right);
-                }
+        WorldMap() : root(nullptr), counter(0) {}
+        //destructor
+        ~WorldMap() {
+            if (root != nullptr) {
+                deleteStructure(root);
             }
         }
 
-
-}
+        //functions to create the tree
+        void generateStructure(int depth); // for root
+        void generateStructure(RoomNode* room, int depth);
+        void deleteStructure(RoomNode* room);
+};

@@ -1,0 +1,5 @@
+g++ tests/tests.cpp -o testcases $(pkg-config --cflags --libs catch2-with-main) && ./testcases
+
+or
+
+g++ tests/tests.cpp -o testcases -lCatch2Main -lCatch2
